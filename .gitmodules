@@ -1,0 +1,3 @@
+[submodule "promised-io"]
+	path = promised-io
+	url = git://github.com/darkhelmet/promised-io.git

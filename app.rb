@@ -54,7 +54,7 @@ get '/:conf/:size' do |conf, size|
               xml.author(author)
               xml.guid(video)
               xml.pubDate(video_doc.search('.video-posted-on strong').text.strip)
-              xml.enclosure(:url => video, :length => video_href.text.split(' - ').last, :type => .text.split(' - ')[1])
+              xml.enclosure(:url => video, :length => video_href.text.split(' - ').last, :type => video_href.text.split(' - ')[1])
             end
           end
         end

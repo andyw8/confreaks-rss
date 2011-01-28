@@ -1,2 +1,2 @@
-require 'rss.rb'
+require 'app'
 run Sinatra::Application

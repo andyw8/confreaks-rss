@@ -6,6 +6,7 @@ require 'excon'
 require 'nokogiri'
 require 'active_support/cache'
 require 'active_support/cache/dalli_store'
+require 'builder'
 
 Root = 'http://confreaks.net'
 Cache = ActiveSupport::Cache::DalliStore.new
@@ -33,9 +34,9 @@ get '/:conf/:size' do |conf, size|
   Cache.fetch(key) do
     url = "#{Root}/events/#{conf}"
     body = fetch_url(url)
-    doc = Nokogiri::HTML(body)
-    links = doc.search('.title a').map { |a| Root + a[:href] }
-    bodies = links.map { |link| fetch_url(url) }
+    docs = Nokogiri::HTML(body).search('.title a').map do |a|
+      Root + a[:href]
+    end.map { |link| Nokogiri::HTML(fetch_url(link)) }
     builder do |xml|
       xml.instruct!
       xml.rss(:version => '2.0') do
@@ -43,11 +44,11 @@ get '/:conf/:size' do |conf, size|
           xml.title("#{conf} - #{size}")
           xml.link(url)
           xml.description("An RSS feed for #{conf} with size matching #{size}")
-          bodies.each do |body|
-            video_doc = Nokogiri::HTML(body)
+          docs.each do |video_doc|
             title = video_doc.search('.video-title').text.strip
             author = video_doc.search('.video-presenters').text.strip
             video_href = video_doc.search('.assets a').select { |a| a.text.include?(size) }.first
+            next if video_href.nil?
             video = Root + video_href[:href]
             xml.item do
               xml.title("#{title} - #{author}")

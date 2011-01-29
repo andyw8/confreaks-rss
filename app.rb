@@ -8,6 +8,10 @@ require 'active_support/cache'
 require 'active_support/cache/dalli_store'
 require 'builder'
 
+if defined?(PhusionPassenger)
+  p 'passenger!'
+end
+
 Root = 'http://confreaks.net'
 Cache = ActiveSupport::Cache::DalliStore.new
 Headers = {
@@ -19,8 +23,8 @@ helpers do
     (rand * 7).days
   end
 
-  def fetch_url(url)
-    Cache.fetch(url.hash.to_s, :expires_in => expires_in) do
+  def fetch_url(url, ttl = expires_in)
+    Cache.fetch(url.hash.to_s, :expires_in => ttl) do
       resp = Excon.get(url, :headers => Headers)
       raise "Invalid URL" unless resp.status == 200
       resp.body
@@ -31,7 +35,7 @@ end
 get '/:conf/:size' do |conf, size|
   content_type 'application/rss+xml'
   url = "#{Root}/events/#{conf}"
-  body = fetch_url(url)
+  body = fetch_url(url, 1.day)
   docs = Nokogiri::HTML(body).search('.title a').map do |a|
     Root + a[:href]
   end.map { |link| Nokogiri::HTML(fetch_url(link)) }

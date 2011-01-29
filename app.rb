@@ -8,15 +8,19 @@ require 'active_support/cache'
 require 'active_support/cache/dalli_store'
 require 'builder'
 
-if defined?(PhusionPassenger)
-  p 'passenger!'
-end
+configure do
+  Root = 'http://confreaks.net'
+  Cache = ActiveSupport::Cache::DalliStore.new
+  Headers = {
+    'User-Agent' => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10"
+  }
 
-Root = 'http://confreaks.net'
-Cache = ActiveSupport::Cache::DalliStore.new
-Headers = {
-  'User-Agent' => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10"
-}
+  if defined?(PhusionPassenger)
+    PhusionPassenger.on_event(:starting_worker_process) do |forked|
+      Cache.reset if forked
+    end
+  end
+end
 
 helpers do
   def expires_in

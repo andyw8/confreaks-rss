@@ -30,33 +30,30 @@ end
 
 get '/:conf/:size' do |conf, size|
   content_type 'application/rss+xml'
-  key = [conf, size, Date.today.to_s, 'rss'].join(':')
-  Cache.fetch(key) do
-    url = "#{Root}/events/#{conf}"
-    body = fetch_url(url)
-    docs = Nokogiri::HTML(body).search('.title a').map do |a|
-      Root + a[:href]
-    end.map { |link| Nokogiri::HTML(fetch_url(link)) }
-    builder do |xml|
-      xml.instruct!
-      xml.rss(:version => '2.0') do
-        xml.channel do
-          xml.title("#{conf} - #{size}")
-          xml.link(url)
-          xml.description("An RSS feed for #{conf} with size matching #{size}")
-          docs.each do |video_doc|
-            title = video_doc.search('.video-title').text.strip
-            author = video_doc.search('.video-presenters').text.strip
-            video_href = video_doc.search('.assets a').select { |a| a.text.include?(size) }.first
-            next if video_href.nil?
-            video = Root + video_href[:href]
-            xml.item do
-              xml.title("#{title} - #{author}")
-              xml.author(author)
-              xml.guid(video)
-              xml.pubDate(video_doc.search('.video-posted-on strong').text.strip)
-              xml.enclosure(:url => video, :length => video_href.text.split(' - ').last, :type => video_href.text.split(' - ')[1])
-            end
+  url = "#{Root}/events/#{conf}"
+  body = fetch_url(url)
+  docs = Nokogiri::HTML(body).search('.title a').map do |a|
+    Root + a[:href]
+  end.map { |link| Nokogiri::HTML(fetch_url(link)) }
+  builder do |xml|
+    xml.instruct!
+    xml.rss(:version => '2.0') do
+      xml.channel do
+        xml.title("#{conf} - #{size}")
+        xml.link(url)
+        xml.description("An RSS feed for #{conf} with size matching #{size}")
+        docs.each do |video_doc|
+          title = video_doc.search('.video-title').text.strip
+          author = video_doc.search('.video-presenters').text.strip
+          video_href = video_doc.search('.assets a').select { |a| a.text.include?(size) }.first
+          next if video_href.nil?
+          video = Root + video_href[:href]
+          xml.item do
+            xml.title("#{title} - #{author}")
+            xml.author(author)
+            xml.guid(video)
+            xml.pubDate(video_doc.search('.video-posted-on strong').text.strip)
+            xml.enclosure(:url => video, :length => video_href.text.split(' - ').last, :type => video_href.text.split(' - ')[1])
           end
         end
       end

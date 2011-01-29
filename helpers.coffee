@@ -1,20 +1,10 @@
-Root = 'http://confreaks.net'
+Sys = require('sys')
 YQL = require('yql')
 Promise = require('./promised-io/lib/promise')
-Request = require('request')
-UserAgent => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10"
 
-extract = (url, rules) ->
-  defer = new Promise.defer()
-  options = {
-    uri: url,
-    headers: {
-      'User-Agent': UserAgent
-    }
-  }
-  Request options, (error, response, body) ->
-    defer.resolve(body)
-  defer
+Root = 'http://confreaks.net'
+
+String.prototype.clean = -> this.replace(/\s+/, ' ')
 
 promiseYQL = (query) ->
   defer = new Promise.defer()
@@ -35,7 +25,7 @@ getLength = (item) ->
 
 getAuthor = (item) ->
   try
-    item.a[0].content
+    item.a[0].content.clean()
   catch boom
     'Unknown'
 
@@ -44,7 +34,7 @@ makeRss = (item) ->
   if url?
     "
     <item>
-      <title>#{item.p} - #{author}</title>
+      <title>#{item.p.clean()} - #{author}</title>
       <author>#{author}</author>
       <guid>#{url}</guid>
       <pubDate>#{item.strong}</pubDate>

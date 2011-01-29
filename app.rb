@@ -16,7 +16,7 @@ Headers = {
 
 helpers do
   def expires_in
-    (rand * 7 + 7).days
+    (rand * 7).days
   end
 
   def fetch_url(url)

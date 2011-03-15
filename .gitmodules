@@ -1,6 +1,0 @@
-[submodule "promised-io"]
-	path = promised-io
-	url = git://github.com/darkhelmet/promised-io.git
-[submodule "jsdom"]
-	path = jsdom
-	url = git://github.com/tmpvar/jsdom.git

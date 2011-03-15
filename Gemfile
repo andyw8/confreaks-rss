@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'sinatra', '~> 1.1.2'
-gem 'excon', '~> 0.4.0'
+gem 'goliath', '~> 0.9.0'
 gem 'nokogiri', '~> 1.4.4'
-gem 'activesupport', '~> 3.0.3'
 gem 'i18n'
-gem 'dalli', '~> 1.0.1'
+gem 'activesupport', '~> 3.0.3', :require => 'active_support'
 gem 'builder', '~> 3.0.0'
+gem 'em-http-request', '~> 1.0.0.beta.3'
+gem 'yajl-ruby', '~> 0.8.1', :require => 'yajl/json_gem'

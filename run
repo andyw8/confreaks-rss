@@ -1,2 +1,2 @@
 #!/bin/bash
-./confreaks.rb -sv -p 4000 -e production
+./confreaks.rb -sv -p 4000

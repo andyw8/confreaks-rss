@@ -12,7 +12,7 @@ class Confreaks < Goliath::API
     'User-Agent' => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10"
   }
 
-  use ::Rack::Reloader, 0 if Goliath.dev?
+  # use ::Rack::Reloader, 0 if Goliath.dev?
 
   def cache
     @cache ||= EM::P::Memcache.connect('localhost', 11211)

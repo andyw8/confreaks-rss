@@ -9,5 +9,6 @@ gem 'em-http-request', '~> 1.0.0.beta.3'
 gem 'yajl-ruby', '~> 0.8.1', :require => 'yajl/json_gem'
 
 group :development do
-  gem 'foreman', '~> 0.15.0'
+  gem 'foreman', '~> 0.15.0', :require => nil
+  gem 'heroku', :require => nil
 end

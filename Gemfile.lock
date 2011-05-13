@@ -1,8 +1,8 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.0.3)
-    addressable (2.2.4)
+    activesupport (3.0.7)
+    addressable (2.2.6)
     async-rack (0.5.1)
       rack (~> 1.1)
     builder (3.0.0)
@@ -16,20 +16,23 @@ GEM
     em-synchrony (0.3.0.beta.1)
       eventmachine (>= 1.0.0.beta.1)
     eventmachine (1.0.0.beta.3)
-    goliath (0.9.0)
+    foreman (0.15.0)
+      term-ansicolor (~> 1.0.5)
+      thor (>= 0.13.6)
+    goliath (0.9.1)
       async-rack
       em-synchrony (>= 0.3.0.beta.1)
       eventmachine (>= 1.0.0.beta.1)
       http_parser.rb
       log4r
       multi_json
-      rack
+      rack (>= 1.2.2)
       rack-contrib
       rack-respond_to
     http_parser.rb (0.5.1)
     i18n (0.5.0)
     log4r (1.1.9)
-    multi_json (0.0.5)
+    multi_json (1.0.2)
     nokogiri (1.4.4)
     rack (1.2.2)
     rack-accept-media-types (0.9)
@@ -37,7 +40,9 @@ GEM
       rack (>= 0.9.1)
     rack-respond_to (0.9.8)
       rack-accept-media-types (>= 0.6)
-    yajl-ruby (0.8.1)
+    term-ansicolor (1.0.5)
+    thor (0.14.6)
+    yajl-ruby (0.8.2)
 
 PLATFORMS
   ruby
@@ -46,6 +51,7 @@ DEPENDENCIES
   activesupport (~> 3.0.3)
   builder (~> 3.0.0)
   em-http-request (~> 1.0.0.beta.3)
+  foreman (~> 0.15.0)
   goliath (~> 0.9.0)
   i18n
   nokogiri (~> 1.4.4)

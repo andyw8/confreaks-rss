@@ -7,6 +7,7 @@ GEM
       rack (~> 1.1)
     builder (3.0.0)
     configuration (1.2.0)
+    dalli (1.0.3)
     em-http-request (1.0.0.beta.3)
       addressable (>= 2.2.3)
       em-socksify
@@ -62,6 +63,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 3.0.3)
   builder (~> 3.0.0)
+  dalli (~> 1.0.3)
   em-http-request (~> 1.0.0.beta.3)
   foreman (~> 0.15.0)
   goliath (~> 0.9.0)

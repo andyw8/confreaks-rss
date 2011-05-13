@@ -4,7 +4,6 @@ require 'bundler/setup'
 Bundler.require
 
 require 'em-synchrony/em-http'
-require 'em-synchrony/em-memcache'
 
 class Confreaks < Goliath::API
   Root = 'http://confreaks.net'
@@ -15,7 +14,7 @@ class Confreaks < Goliath::API
   # use ::Rack::Reloader, 0 if Goliath.dev?
 
   def cache
-    @cache ||= EM::P::Memcache.connect('localhost', 11211)
+    @cache ||= Dalli::Client.new
   end
 
   def week_of_year

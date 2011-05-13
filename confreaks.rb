@@ -49,20 +49,19 @@ class Confreaks < Goliath::API
 
       pages = EM::Synchrony::Iterator.new(presentation_urls, 5).map do |url, iter|
         key = key_for_url(url)
-        cache.aget(key) do |cached|
-          if cached.nil?
-            http = EM::HttpRequest.new(url).aget
-            http.callback do
-              if 200 == http.response_header.status
-                cache.aset(key, http.response) { p :stored }
-                iter.return(http.response)
-              else
-                iter.return(nil)
-              end
+        cached = cache.get(key)
+        if cached.nil?
+          http = EM::HttpRequest.new(url).aget
+          http.callback do
+            if 200 == http.response_header.status
+              cache.aset(key, http.response) { p :stored }
+              iter.return(http.response)
+            else
+              iter.return(nil)
             end
-          else
-            iter.return(cached)
           end
+        else
+          iter.return(cached)
         end
       end.compact
 

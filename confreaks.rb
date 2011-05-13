@@ -54,7 +54,7 @@ class Confreaks < Goliath::API
           http = EM::HttpRequest.new(url).aget
           http.callback do
             if 200 == http.response_header.status
-              cache.aset(key, http.response) { p :stored }
+              cache.set(key, http.response)
               iter.return(http.response)
             else
               iter.return(nil)

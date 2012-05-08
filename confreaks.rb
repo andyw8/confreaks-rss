@@ -6,7 +6,7 @@ Bundler.require
 require 'em-synchrony/em-http'
 
 class Confreaks < Goliath::API
-  Root = 'http://confreaks.net'
+  Root = 'http://confreaks.com'
   Headers = {
     'User-Agent' => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_6; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.237 Safari/534.10"
   }

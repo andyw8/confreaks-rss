@@ -79,7 +79,7 @@ class Confreaks < Goliath::API
             author = video_doc.search('.video-presenters').text.strip
             video_href = video_doc.search('.assets a').select { |a| a.text.include?(size) }.first
             next if video_href.nil?
-            video = Root + video_href[:href]
+            video = video_href[:href]
             xml.item do
               xml.title("#{title} - #{author}")
               xml.author(author)
